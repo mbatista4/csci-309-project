@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.AirLineController">
+   <children>
+      <Label layoutX="70.0" layoutY="45.0" text="Label" />
+      <Button layoutX="1175.0" layoutY="650.0" mnemonicParsing="false" text="Button" />
+      <TableView fx:id="tableView" layoutX="64.0" layoutY="112.0" prefHeight="200.0" prefWidth="523.0">
+        <columns>
+          <TableColumn fx:id="flightNameColumn" prefWidth="129.0" text="Flight Name" />
+          <TableColumn fx:id="destinationColumn" prefWidth="121.0" text="Destination" />
+            <TableColumn fx:id="seatsAvailableColumn" prefWidth="99.0" text="Seats Available" />
+            <TableColumn fx:id="priceColumn" prefWidth="90.0" text="Price" />
+            <TableColumn fx:id="statusColumn" prefWidth="83.0" text="Status" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
