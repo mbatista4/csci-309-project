@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 public class SwitchScene {
 
-    static void switchScene(ActionEvent event, Parent parent){
+    static public void switchScene(ActionEvent event, Parent parent){
 
             Scene newScreenScene = new Scene(parent);
             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -18,7 +18,7 @@ public class SwitchScene {
             window.show();
     }
 
-    static void switchScene(ActionEvent event, Parent parent, String fileName){
+    static public void switchScene(ActionEvent event, Parent parent, String fileName){
 
         Scene newScreenScene = new Scene(parent);
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
