@@ -1,7 +1,8 @@
-package main;
+package main.utils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import main.Flight;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,16 +12,6 @@ import java.util.Scanner;
 
 public class FileReader {
 
-    private static File ensureFile(String fileName) throws IOException {
-        System.out.println(fileName);
-        File myFile = new File(fileName);
-
-        if(!myFile.isFile()){
-            myFile.createNewFile();
-        }
-
-        return myFile;
-    }
 
     public static ObservableList<Flight> getAllFlights(String fileName) throws IOException{
         ObservableList<Flight> flights = FXCollections.observableArrayList();
@@ -36,7 +27,7 @@ public class FileReader {
                 String seatsAvailable = reader.nextLine();
                 String pricePerSeat = reader.nextLine();
 
-                flights.add(new Flight(flightName,destination,flightStatus,Integer.parseInt(seatsAvailable),Double.parseDouble(pricePerSeat)));
+                flights.add(new Flight(flightName,destination,flightStatus,Integer.parseInt(seatsAvailable),Integer.parseInt(pricePerSeat)));
             }
             reader.close();
         } catch (Exception e){
@@ -46,21 +37,98 @@ public class FileReader {
         return flights;
     }
 
-    private boolean updateFlight(){
-        boolean didUpdate = false;
+
+    public static String getUserPassword(String username){
+        String password = "";
+
+        try {
+            //Ensuring that the file exist to prevent error
+            File userFile = ensureFile("users.txt");
+
+            Scanner scanner = new Scanner(userFile);
+            while(scanner.hasNext()){
+                String tempUsername = scanner.nextLine();
+                if(tempUsername.compareToIgnoreCase(username) == 0){
+                    password = scanner.nextLine();
+                    break;
+                } else {
+                    scanner.nextLine();
+                }
+            }
+        } catch ( IOException e) {
+            System.out.println("Error reading files");
+        }
+        return password;
+    }
+
+    public static boolean checkUsername(String username) {
+        boolean isFound = false;
+        try {
+            File userFile = ensureFile("users.txt");
+
+            Scanner fileScan = new Scanner(userFile);
+            while(fileScan.hasNext()){
+                String fileUser = fileScan.nextLine();
+                if(fileUser.compareTo(username) == 0){
+                    isFound = true;
+                    break;
+                }
+                if(!fileScan.hasNext()){
+                    break;
+                }
+                fileScan.nextLine();
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error Reading File");
+        }
+
+        return isFound;
+    }
+
+    public static boolean addUser (String username, String password) {
+
+        boolean didAdd = false;
+
+        String encryptPassword = Password.encryptPassword(password);
+
+        try {
+            File userFile = ensureFile("users.txt");
+            FileWriter writer = new FileWriter(userFile.getPath(),true);
+            BufferedWriter bufferedWriter = new BufferedWriter(writer);
+
+            bufferedWriter.write(username + "\n");
+            bufferedWriter.write(encryptPassword + "\n");
+
+            bufferedWriter.close();
+            didAdd = true;
+        } catch (IOException e) {
+            System.out.println("Error Reading file");
+        }
+
+        return didAdd;
+    }
 
 
-        return didUpdate;
+    private static File ensureFile(String fileName) throws IOException {
+        File myFile = new File(fileName);
+        boolean didCreate = myFile.createNewFile();
+
+        if(didCreate) {
+            System.out.println("New File Was Created");
+        }
+        return myFile;
     }
 
     /*
      * adds a new flight to the textFile provided
      * @param return success or fail
      */
-    private boolean addFlight(File flightTxt, Flight newFlight) {
+    public static boolean addFlight(String flightTxt, Flight newFlight) {
         boolean didAdd = false;
         try{
-            FileWriter writer = new FileWriter(flightTxt.getPath(),true);
+            File flightFile = ensureFile(flightTxt);
+            FileWriter writer = new FileWriter(flightFile.getPath(),true);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
 
             bufferedWriter.write(newFlight.getFlightName() + "\n");
@@ -74,10 +142,8 @@ public class FileReader {
             e.printStackTrace();
             System.out.println("An error occurred");
         }
-
         return didAdd;
     }
-
 
 
 }

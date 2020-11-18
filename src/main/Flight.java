@@ -8,10 +8,10 @@ public class Flight {
     private SimpleStringProperty flightDestination;
     private SimpleStringProperty flightStatus;
     private int seatsAvailable;
-    private double pricePerSeat;
+    private int pricePerSeat;
 
 
-    public Flight(String flightName, String flightDestination, String flightStatus, int seatsAvailable,double pricePerSeat){
+    public Flight(String flightName, String flightDestination, String flightStatus, int seatsAvailable,int pricePerSeat){
         this.flightDestination = new SimpleStringProperty(flightDestination);
         this.flightName = new SimpleStringProperty(flightName);
         this.flightStatus = new SimpleStringProperty(flightStatus);
@@ -35,7 +35,7 @@ public class Flight {
         return flightStatus.get();
     }
 
-    public double getPricePerSeat() {
+    public int getPricePerSeat() {
         return pricePerSeat;
     }
 
@@ -55,7 +55,22 @@ public class Flight {
         this.seatsAvailable = seatsAvailable;
     }
 
-    public void setPricePerSeat(double pricePerSeat) {
+    public void setPricePerSeat(int pricePerSeat) {
         this.pricePerSeat = pricePerSeat;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder out = new StringBuilder();
+
+        out.append("Flight Name: " + this.getFlightName() + "\n");
+        out.append("Flight Destination: " + this.getFlightDestination() + "\n");
+        out.append("Seats available" + this.getSeatsAvailable() + "\n");
+        out.append("Flight Status: "+this.getFlightStatus() + "\n");
+        out.append("Price per Seat: " + this.getPricePerSeat() + "\n");
+
+
+        return out.toString();
+    }
+
 }
