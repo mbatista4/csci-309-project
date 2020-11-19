@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -65,9 +66,18 @@ public class registerController extends Controller{
     private void goToEdit(ActionEvent event) {
 
         try{
-            URL registerURL = getClass().getResource("editScene.fxml");
-            Parent registerParent = FXMLLoader.load(registerURL);
-            SwitchScene.switchScene(event,registerParent);
+            URL editURL = getClass().getResource("editScene.fxml");
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(editURL);
+            Parent editParent = loader.load();
+            Scene editScene = new Scene(editParent);
+            EditController controller = loader.getController();
+
+            controller.initJetGreenTable();
+            controller.initBravoTable();
+            controller.initDividedTable();
+
+            SwitchScene.switchScene(event,editScene);
 
         } catch (IOException e) {
             e.printStackTrace();

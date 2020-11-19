@@ -1,7 +1,6 @@
 package main;
 
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -9,7 +8,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import main.utils.FileReader;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,7 +23,7 @@ public class EditController extends Controller implements Initializable {
     @FXML private  TextField destinationTextField;
 
     //JetGreen tableview
-    @FXML private TableView jetGreenTableView;
+    @FXML private TableView<Flight> jetGreenTableView;
     @FXML private TableColumn<Flight,String> jetGreenFlightNameColumn;
     @FXML private TableColumn<Flight,String> jetGreenDestinationColumn;
     @FXML private TableColumn<Flight,String> jetGreenStatusColumn;
@@ -33,7 +31,7 @@ public class EditController extends Controller implements Initializable {
     @FXML private TableColumn<Flight,Double> jetGreenPriceColumn;
 
     //Divided tableview
-    @FXML private TableView dividedTableView;
+    @FXML private TableView<Flight> dividedTableView;
     @FXML private TableColumn<Flight,String> dividedFlightNameColumn;
     @FXML private TableColumn<Flight,String> dividedDestinationColumn;
     @FXML private TableColumn<Flight,String> dividedStatusColumn;
@@ -41,7 +39,7 @@ public class EditController extends Controller implements Initializable {
     @FXML private TableColumn<Flight,Double> dividedPriceColumn;
 
     //Bravo tableview
-    @FXML private TableView bravoTableView;
+    @FXML private TableView<Flight> bravoTableView;
     @FXML private TableColumn<Flight,String> bravoFlightNameColumn;
     @FXML private TableColumn<Flight,String> bravoDestinationColumn;
     @FXML private TableColumn<Flight,String> bravoStatusColumn;
@@ -84,20 +82,12 @@ public class EditController extends Controller implements Initializable {
 
     private ObservableList<Flight> getFlightList(String fileName) {
 
-        ObservableList<Flight> list = null;
-
-        try {
-            list = FileReader.getAllFlights(fileName);
-        } catch (IOException e) {
-            createAlertWindow("Error getting flights", Alert.AlertType.ERROR);
-        }
-
-        return list;
+        return FileReader.getAllFlights(fileName);
     }
 
 
-    public void addDivided(ActionEvent event){
-        Flight newFlight = addFlight(event,"usAirlines.txt");
+    public void addDivided(){
+        Flight newFlight = addFlight("usAirlines.txt");
 
         if(newFlight!= null ){
             dividedTableView.getItems().add(newFlight);
@@ -105,22 +95,22 @@ public class EditController extends Controller implements Initializable {
 
     }
 
-    public void addJet(ActionEvent event){
-        Flight newFlight = addFlight(event,"jetGreen.txt");
+    public void addJet(){
+        Flight newFlight = addFlight("jetGreen.txt");
         if(newFlight!= null ){
             jetGreenTableView.getItems().add(newFlight);
         }
     }
 
-    public void addBravo(ActionEvent event) {
-        Flight newFlight = addFlight(event,"bravoAirlines.txt");
+    public void addBravo() {
+        Flight newFlight = addFlight("bravoAirlines.txt");
         if(newFlight!= null ){
             bravoTableView.getItems().add(newFlight);
         }
     }
 
 
-    public Flight addFlight(ActionEvent event, String flightTxt) {
+    public Flight addFlight(String flightTxt) {
 
         String flightName = flightNameTextField.getText();
         String flightDestination = destinationTextField.getText();
@@ -153,10 +143,15 @@ public class EditController extends Controller implements Initializable {
 
                 int price = Integer.parseInt(t1);
 
-                if(price <= 0)
+                if(price <= 0){
                     priceTextField.textProperty().setValue("1");
+                } else if(price > 300) {
+                    priceTextField.textProperty().setValue("300");
+                }
+                else {
+                    priceSlider.valueProperty().setValue(price);
+                }
 
-                priceSlider.valueProperty().setValue(Integer.parseInt(t1));
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a number");
             }
@@ -172,10 +167,15 @@ public class EditController extends Controller implements Initializable {
 
                 int seats = Integer.parseInt(t1);
 
-                if(seats <= 0)
+                if(seats <= 0){
                     seatTextField.textProperty().setValue("1");
+                } else if(seats > 200) {
+                    seatTextField.textProperty().setValue("200");
+                }else
+                 {
+                    seatSlider.valueProperty().setValue(seats);
+                }
 
-                seatSlider.valueProperty().setValue(seats);
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a number");
             }

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import main.utils.FileReader;
@@ -22,26 +23,30 @@ public class LoginController extends Controller{
 
     public void login(ActionEvent event) {
 
-        String usernameText = userNameTextField.getText();
-        String passwordText = passwordField.getText();
+        String usernameText = userNameTextField.getText().trim();
+        String passwordText = passwordField.getText().trim();
 
         if(!usernameText.isEmpty()){
             String password = FileReader.getUserPassword(usernameText);
 
-            if( !(password == null) || !password.isEmpty()){
+            if( !password.isEmpty()){
 
                 boolean isCorrect =  Password.comparePasswords(passwordText,password);
+
+                System.out.println(isCorrect);
 
                 if(isCorrect) {
                     goToEdit(event);
                 } else {
-                    System.out.println("Password is incorrect!");
+                    createAlertWindow("Password is incorrect.", Alert.AlertType.WARNING);
                     passwordField.clear();
                 }
 
             } else {
-                System.out.println("Username is not found!");
+                createAlertWindow("username was not found", Alert.AlertType.WARNING);
             }
+        } else {
+            createAlertWindow("Please Enter A username.", Alert.AlertType.WARNING);
         }
     }
 

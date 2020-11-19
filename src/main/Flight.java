@@ -4,8 +4,8 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Flight {
 
-    private SimpleStringProperty flightName;
-    private SimpleStringProperty flightDestination;
+    private final SimpleStringProperty flightName;
+    private final SimpleStringProperty flightDestination;
     private SimpleStringProperty flightStatus;
     private int seatsAvailable;
     private int pricePerSeat;
@@ -39,16 +39,8 @@ public class Flight {
         return pricePerSeat;
     }
 
-    public void setFlightDestination(SimpleStringProperty flightDestination) {
-        this.flightDestination = flightDestination;
-    }
-
-    public void setFlightName(SimpleStringProperty flightName) {
-        this.flightName = flightName;
-    }
-
-    public void setFlightStatus(SimpleStringProperty flightStatus) {
-        this.flightStatus = flightStatus;
+    public void setFlightStatus(String flightStatus) {
+        this.flightStatus = new SimpleStringProperty(flightStatus);
     }
 
     public void setSeatsAvailable(int seatsAvailable) {
@@ -61,16 +53,13 @@ public class Flight {
 
     @Override
     public String toString() {
-        StringBuilder out = new StringBuilder();
-
-        out.append("Flight Name: " + this.getFlightName() + "\n");
-        out.append("Flight Destination: " + this.getFlightDestination() + "\n");
-        out.append("Seats available" + this.getSeatsAvailable() + "\n");
-        out.append("Flight Status: "+this.getFlightStatus() + "\n");
-        out.append("Price per Seat: " + this.getPricePerSeat() + "\n");
 
 
-        return out.toString();
+        return "Flight Name: " + this.getFlightName() + "\n" +
+                "Flight Destination: " + this.getFlightDestination() + "\n" +
+                "Seats available" + this.getSeatsAvailable() + "\n" +
+                "Flight Status: " + this.getFlightStatus() + "\n" +
+                "Price per Seat: " + this.getPricePerSeat() + "\n";
     }
 
 }

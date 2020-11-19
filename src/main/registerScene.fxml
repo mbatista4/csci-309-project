@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(to top, #00b7ba, #00fbff);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.registerController">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(to top, #00b7ba, #00fbff);" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.registerController">
     <children>
         <VBox layoutX="504.0" layoutY="173.0" prefHeight="351.0" prefWidth="272.0" style="-fx-background-color: #e3e3e3; -fx-background-radius: 10%;">
             <children>

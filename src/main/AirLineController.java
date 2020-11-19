@@ -26,7 +26,7 @@ public class AirLineController extends Controller{
     @FXML private TableColumn<Flight,Double> priceColumn;
 
     private String flightTxtFile;
-
+    private ObservableList<Flight> flightList;
     /*
      * This method accepts a file to initialize the path for the data
      * @param the file with all of the flights
@@ -42,19 +42,19 @@ public class AirLineController extends Controller{
         // Load data
         tableView.setItems(getFlights());
 
+
         // Setting title of the window
         titleLabel.setText(flightName);
     }
 
     private ObservableList<Flight> getFlights() {
-        ObservableList<Flight> flights = null;
         try {
-            flights = FileReader.getAllFlights(flightTxtFile);
+            flightList = FileReader.getAllFlights(flightTxtFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return  flights;
+        return  flightList;
     }
 
     public void buyFlight(ActionEvent event) {
@@ -62,6 +62,12 @@ public class AirLineController extends Controller{
         Flight selectedFlight = tableView.getSelectionModel().getSelectedItem();
 
         if(selectedFlight != null){
+
+            if(selectedFlight.getFlightStatus().compareToIgnoreCase("FULL") == 0 || selectedFlight.getSeatsAvailable() <= 0){
+                createAlertWindow("Flight is full, Select another flight", Alert.AlertType.WARNING);
+                return;
+            }
+
             System.out.println(selectedFlight);
 
             URL checkoutLocation = getClass().getResource("CheckoutScene.fxml");
@@ -71,7 +77,7 @@ public class AirLineController extends Controller{
             try {
                 Parent checkoutParent = loader.load();
                 CheckoutController controller = loader.getController();
-                controller.initData(selectedFlight,flightTxtFile,titleLabel.getText());
+                controller.initData(selectedFlight,flightTxtFile,titleLabel.getText(),flightList);
                 SwitchScene.switchScene(event,checkoutParent);
 
             } catch (IOException e) {

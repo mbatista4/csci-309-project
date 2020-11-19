@@ -2,6 +2,7 @@ package main;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import main.utils.SwitchScene;
@@ -22,6 +23,7 @@ public class Controller {
     public void createAlertWindow(String message, Alert.AlertType type) {
         Alert alertWindow = new Alert(type);
         alertWindow.setContentText(message);
+        alertWindow.setTitle("FLY");
         alertWindow.showAndWait();
     }
 }

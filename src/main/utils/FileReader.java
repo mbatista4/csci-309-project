@@ -13,7 +13,7 @@ import java.util.Scanner;
 public class FileReader {
 
 
-    public static ObservableList<Flight> getAllFlights(String fileName) throws IOException{
+    public static ObservableList<Flight> getAllFlights(String fileName){
         ObservableList<Flight> flights = FXCollections.observableArrayList();
         File textFile = ensureFile(fileName);
         try{
@@ -30,7 +30,7 @@ public class FileReader {
                 flights.add(new Flight(flightName,destination,flightStatus,Integer.parseInt(seatsAvailable),Integer.parseInt(pricePerSeat)));
             }
             reader.close();
-        } catch (Exception e){
+        } catch (IOException e){
             e.printStackTrace();
         }
 
@@ -110,12 +110,15 @@ public class FileReader {
     }
 
 
-    private static File ensureFile(String fileName) throws IOException {
+    private static File ensureFile(String fileName) {
         File myFile = new File(fileName);
-        boolean didCreate = myFile.createNewFile();
-
-        if(didCreate) {
-            System.out.println("New File Was Created");
+        try {
+            boolean didCreate = myFile.createNewFile();
+            if(didCreate) {
+                System.out.println("New File Was Created");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return myFile;
     }
@@ -124,8 +127,7 @@ public class FileReader {
      * adds a new flight to the textFile provided
      * @param return success or fail
      */
-    public static boolean addFlight(String flightTxt, Flight newFlight) {
-        boolean didAdd = false;
+    public static void addFlight(String flightTxt, Flight newFlight) {
         try{
             File flightFile = ensureFile(flightTxt);
             FileWriter writer = new FileWriter(flightFile.getPath(),true);
@@ -137,13 +139,27 @@ public class FileReader {
             bufferedWriter.write(newFlight.getSeatsAvailable() + "\n");
             bufferedWriter.write(newFlight.getPricePerSeat() + "\n");
             bufferedWriter.close();
-            didAdd = true;
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("An error occurred");
         }
-        return didAdd;
     }
 
+    public static void updateSeatTotal(String fileName, ObservableList<Flight> list) throws IOException {
+
+        File airlineFile = ensureFile(fileName);
+        FileWriter writer = new FileWriter(airlineFile.getPath(),false);
+        BufferedWriter bufferedWriter = new BufferedWriter(writer);
+
+        for(Flight flight : list) {
+            bufferedWriter.write(flight.getFlightName() + "\n");
+            bufferedWriter.write(flight.getFlightDestination() + "\n");
+            bufferedWriter.write(flight.getFlightStatus() + "\n");
+            bufferedWriter.write(flight.getSeatsAvailable() + "\n");
+            bufferedWriter.write(flight.getPricePerSeat() + "\n");
+        }
+        bufferedWriter.close();
+
+    }
 
 }
