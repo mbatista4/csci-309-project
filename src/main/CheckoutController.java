@@ -12,13 +12,16 @@ import main.utils.SwitchScene;
 import java.io.IOException;
 import java.net.URL;
 
+/*
+ * This class provides all of the functionality needed
+ * for the Checkout view
+ */
 public class CheckoutController extends Controller {
 
     private Flight selectedFlight;
     private String prevTxt;
     private String prevTitle;
     private ObservableList<Flight> flightList;
-
 
     @FXML private Label flightNameLabel;
     @FXML private Label destinationLabel;
@@ -27,10 +30,8 @@ public class CheckoutController extends Controller {
     @FXML private TextField seatsTextField;
     @FXML private TextField totalTextField;
 
-
-
     /*
-     *
+     * TODO write method description
      */
     public void initData(Flight flight, String prevTxt, String prevTitle, ObservableList<Flight> flightList) {
 
@@ -73,41 +74,57 @@ public class CheckoutController extends Controller {
 
     }
 
+    /*
+     * returns to the previous window
+     */
     public void goBack(ActionEvent event) {
         URL backUrl = getClass().getResource("AirlineScene.fxml");
         SwitchScene.changeScreenToFlights(prevTxt,event,prevTitle, backUrl);
     }
 
+    /*
+     * TODO write description
+     */
     public void purchaseFlight(ActionEvent event) {
 
-        System.out.println(flightList.remove(selectedFlight));
+        if(flightList.remove(selectedFlight)){
+            int updatedSeatCount = selectedFlight.getSeatsAvailable() - Integer.parseInt(seatsTextField.getText());
 
-        int updatedSeatCount = selectedFlight.getSeatsAvailable() - Integer.parseInt(seatsTextField.getText());
-
-        if(updatedSeatCount == 0) {
-            selectedFlight.setFlightStatus("FULL");
-        }
-
-        selectedFlight.setSeatsAvailable(updatedSeatCount);
-        flightList.add(selectedFlight);
-        System.out.println(selectedFlight);
-        switchToMain(event);
-        try {
-            FileReader.updateSeatTotal(prevTxt,flightList);
-        } catch (IOException e) {
-            createAlertWindow("Error checking out", Alert.AlertType.ERROR);
-            flightList.remove(selectedFlight);
-
-            updatedSeatCount = selectedFlight.getSeatsAvailable() + Integer.parseInt(seatsTextField.getText());
-
-            if(updatedSeatCount > 0) {
-                selectedFlight.setFlightStatus("AVAILABLE");
+            if(updatedSeatCount == 0) {
+                selectedFlight.setFlightStatus("FULL");
             }
 
-            selectedFlight.setPricePerSeat(updatedSeatCount);
+            selectedFlight.setSeatsAvailable(updatedSeatCount);
             flightList.add(selectedFlight);
-        }
 
+            try {
+                FileReader.updateSeatTotal(prevTxt,flightList);
+
+                String data = buildReceipt();
+
+                FileReader.createReceipt(data);
+                createAlertWindow( data + "\nhank you for using F.E.M Airport!", Alert.AlertType.INFORMATION);
+                switchToMain(event);
+            } catch (IOException e) {
+              createAlertWindow("Error occured while buying flight", Alert.AlertType.ERROR);
+              System.exit(1);
+            }
+        } else {
+            createAlertWindow("Error buying flight", Alert.AlertType.ERROR);
+        }
+    }
+
+    /*
+     * Method build the data required for the user's receipt
+     * @param out is fully build output
+     */
+    private String buildReceipt() {
+
+        return "Flight Name: " + selectedFlight.getFlightName() + "\n" +
+                "Flight destination: " + selectedFlight.getFlightDestination() + "\n" +
+                "Seats purchased: " + seatsTextField.getText() + "\n" +
+                "Total cost: " + totalTextField.getText() + "\n" +
+                "Thank you for using F.E.M Airport!";
     }
 
 }

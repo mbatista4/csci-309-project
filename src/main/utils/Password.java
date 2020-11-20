@@ -1,9 +1,15 @@
 package main.utils;
 
+/*
+ * this class provides basic encryption/decryption support for Manager Registration/Login
+ */
 public class Password {
 
     final static int ENCRYPT_VAL = 3;
 
+    /*
+     * TODO write method description
+     */
     public static String encryptPassword(String password) {
 
         char[] passwordChar = password.toCharArray();
@@ -11,10 +17,12 @@ public class Password {
         for (int i = 0; i < passwordChar.length; i++) {
             passwordChar[i] = (char) (passwordChar[i] + ENCRYPT_VAL);
         }
-
         return buildString(passwordChar);
     }
 
+    /*
+     * TODO write method description
+     */
     public static String decryptPassword(String encryptedPassword) {
 
         char[] passwordChar = encryptedPassword.toCharArray();
@@ -38,6 +46,9 @@ public class Password {
         return (decryptPassword(encryptedPassword).compareTo(unencryptedPassword) == 0);
     }
 
+    /*
+     * TODO write method description
+     */
     private static String buildString(char[] password) {
         StringBuilder stringBuilder = new StringBuilder();
         for (char c : password) {

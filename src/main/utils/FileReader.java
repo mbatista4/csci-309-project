@@ -10,9 +10,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/*
+ * This class handles all of the IO file reading and writing
+ */
 public class FileReader {
 
-
+    /*
+     * TODO write method description
+     */
     public static ObservableList<Flight> getAllFlights(String fileName){
         ObservableList<Flight> flights = FXCollections.observableArrayList();
         File textFile = ensureFile(fileName);
@@ -37,7 +42,9 @@ public class FileReader {
         return flights;
     }
 
-
+    /*
+     * TODO write method description
+     */
     public static String getUserPassword(String username){
         String password = "";
 
@@ -61,6 +68,9 @@ public class FileReader {
         return password;
     }
 
+    /*
+     * TODO write method description
+     */
     public static boolean checkUsername(String username) {
         boolean isFound = false;
         try {
@@ -86,6 +96,9 @@ public class FileReader {
         return isFound;
     }
 
+    /*
+     * TODO write method description
+     */
     public static boolean addUser (String username, String password) {
 
         boolean didAdd = false;
@@ -109,7 +122,9 @@ public class FileReader {
         return didAdd;
     }
 
-
+    /*
+     * TODO write method description
+     */
     private static File ensureFile(String fileName) {
         File myFile = new File(fileName);
         try {
@@ -145,6 +160,9 @@ public class FileReader {
         }
     }
 
+    /*
+     * TODO write method description
+     */
     public static void updateSeatTotal(String fileName, ObservableList<Flight> list) throws IOException {
 
         File airlineFile = ensureFile(fileName);
@@ -160,6 +178,20 @@ public class FileReader {
         }
         bufferedWriter.close();
 
+    }
+
+    /*
+     * TODO write method description
+     */
+    public static void createReceipt(String data) throws IOException {
+
+        File receipt = ensureFile("receipt.txt");
+        FileWriter writer = new FileWriter(receipt.getPath(),false);
+        BufferedWriter bufferedWriter = new BufferedWriter(writer);
+
+        bufferedWriter.write(data + "\n");
+        bufferedWriter.close();
+        System.out.println(data);
     }
 
 }

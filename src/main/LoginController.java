@@ -15,12 +15,17 @@ import main.utils.SwitchScene;
 import java.io.IOException;
 import java.net.URL;
 
-
+/*
+ * TODO write description
+ */
 public class LoginController extends Controller{
 
     @FXML private TextField userNameTextField;
     @FXML private PasswordField passwordField;
 
+    /*
+     * TODO write description
+     */
     public void login(ActionEvent event) {
 
         String usernameText = userNameTextField.getText().trim();
@@ -41,7 +46,6 @@ public class LoginController extends Controller{
                     createAlertWindow("Password is incorrect.", Alert.AlertType.WARNING);
                     passwordField.clear();
                 }
-
             } else {
                 createAlertWindow("username was not found", Alert.AlertType.WARNING);
             }
@@ -50,6 +54,9 @@ public class LoginController extends Controller{
         }
     }
 
+    /*
+     * TODO write description
+     */
     public void goToRegister(ActionEvent event){
 
         try{
@@ -62,6 +69,9 @@ public class LoginController extends Controller{
         }
     }
 
+    /*
+     * TODO write description
+     */
     private void goToEdit(ActionEvent event) {
 
         try{

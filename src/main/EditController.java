@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 
 public class EditController extends Controller implements Initializable {
 
+    // C
     @FXML private Slider priceSlider;
     @FXML private VBox newFlightVBox;
     @FXML private Slider seatSlider;
@@ -48,6 +49,9 @@ public class EditController extends Controller implements Initializable {
 
     private boolean isVisible = false;
 
+    /*
+     * TODO write description
+     */
     public void initJetGreenTable() {
         jetGreenFlightNameColumn.setCellValueFactory(new PropertyValueFactory<>("flightName"));
         jetGreenDestinationColumn.setCellValueFactory(new PropertyValueFactory<>("flightDestination"));
@@ -58,6 +62,9 @@ public class EditController extends Controller implements Initializable {
         jetGreenTableView.setItems(getFlightList("jetGreen.txt"));
     }
 
+    /*
+     * TODO write description
+     */
     public void initDividedTable() {
         dividedFlightNameColumn.setCellValueFactory(new PropertyValueFactory<>("flightName"));
         dividedDestinationColumn.setCellValueFactory(new PropertyValueFactory<>("flightDestination"));
@@ -69,32 +76,37 @@ public class EditController extends Controller implements Initializable {
         dividedTableView.setItems(getFlightList("usAirlines.txt"));
     }
 
+    /*
+     * TODO write description
+     */
     public void initBravoTable() {
         bravoFlightNameColumn.setCellValueFactory(new PropertyValueFactory<>("flightName"));
         bravoDestinationColumn.setCellValueFactory(new PropertyValueFactory<>("flightDestination"));
         bravoStatusColumn.setCellValueFactory(new PropertyValueFactory<>("flightStatus"));
         bravoSeatsAvailableColumn.setCellValueFactory(new PropertyValueFactory<>("seatsAvailable"));
         bravoPriceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePerSeat"));
-
         bravoTableView.setItems(getFlightList("bravoAirlines.txt"));
-
     }
 
-    private ObservableList<Flight> getFlightList(String fileName) {
+    /*
+     * TODO write description
+     */
+    private ObservableList<Flight> getFlightList(String fileName) { return FileReader.getAllFlights(fileName); }
 
-        return FileReader.getAllFlights(fileName);
-    }
-
-
+    /*
+     * TODO write description
+     */
     public void addDivided(){
         Flight newFlight = addFlight("usAirlines.txt");
 
         if(newFlight!= null ){
             dividedTableView.getItems().add(newFlight);
         }
-
     }
 
+    /*
+     * TODO write description
+     */
     public void addJet(){
         Flight newFlight = addFlight("jetGreen.txt");
         if(newFlight!= null ){
@@ -102,6 +114,9 @@ public class EditController extends Controller implements Initializable {
         }
     }
 
+    /*
+     * TODO write description
+     */
     public void addBravo() {
         Flight newFlight = addFlight("bravoAirlines.txt");
         if(newFlight!= null ){
@@ -109,7 +124,9 @@ public class EditController extends Controller implements Initializable {
         }
     }
 
-
+    /*
+     * TODO write description
+     */
     public Flight addFlight(String flightTxt) {
 
         String flightName = flightNameTextField.getText();
@@ -121,7 +138,6 @@ public class EditController extends Controller implements Initializable {
         if(flightName.isEmpty() || flightDestination.isEmpty() || price <= 0 || seats <= 0) {
             createAlertWindow("Missing Fields!!", Alert.AlertType.WARNING);
         } else {
-
             newFlight = new Flight(flightName,flightDestination,"Available",seats,price);
             FileReader.addFlight(flightTxt,newFlight);
             createAlertWindow("Flight Added!!", Alert.AlertType.INFORMATION);
@@ -129,7 +145,9 @@ public class EditController extends Controller implements Initializable {
         return newFlight;
     }
 
-
+    /*
+     * TODO write description
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -151,7 +169,6 @@ public class EditController extends Controller implements Initializable {
                 else {
                     priceSlider.valueProperty().setValue(price);
                 }
-
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a number");
             }
@@ -182,10 +199,11 @@ public class EditController extends Controller implements Initializable {
         });
     }
 
+    /*
+     * TODO write description
+     */
     public void showAdd() {
         isVisible = !isVisible;
         newFlightVBox.setVisible(isVisible);
     }
-
-
 }

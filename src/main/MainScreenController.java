@@ -7,20 +7,35 @@ import main.utils.SwitchScene;
 
 import java.net.URL;
 
+/*
+ * TODO write description
+ */
 public class MainScreenController {
 
+    /*
+     * TODO write description
+     */
     public void loadJetGreen(ActionEvent event) {
             loadFLights("jetGreen.txt",event, "JetGreen");
     }
 
+    /*
+     * TODO write description
+     */
     public void loadUSAirlines(ActionEvent event) {
             loadFLights("usAirlines.txt",event,"US Airlines");
     }
 
+    /*
+     * TODO write description
+     */
     public void loadBravoAirlines(ActionEvent event) {
             loadFLights("bravoAirlines.txt",event,"Bravo Airlines");
     }
 
+    /*
+     * TODO write description
+     */
     private void loadFLights(String fileName,ActionEvent event, String flightName) {
         try {
             URL sceneLocation = getClass().getResource("AirlineScene.fxml");
@@ -32,6 +47,9 @@ public class MainScreenController {
         }
     }
 
+    /*
+     * TODO write description
+     */
     public void switchToLogin(ActionEvent event) {
 
         try {

@@ -13,13 +13,18 @@ import main.utils.Password;
 import java.io.IOException;
 import java.net.URL;
 
+/*
+ * TODO write description
+ */
 public class registerController extends Controller{
 
     @FXML private TextField passcodeTextField;
     @FXML private TextField userNameTextField;
     @FXML private PasswordField passwordField;
 
-
+    /*
+     * TODO write description
+     */
     public void register(ActionEvent event) {
 
         String PASSCODE = "99203";
@@ -52,6 +57,9 @@ public class registerController extends Controller{
         }
     }
 
+    /*
+     * TODO write description
+     */
     public void goToLogin(ActionEvent event) {
         try {
             URL loginURL = getClass().getResource("LoginScreen.fxml");
@@ -63,6 +71,9 @@ public class registerController extends Controller{
         }
     }
 
+    /*
+     * TODO write description
+     */
     private void goToEdit(ActionEvent event) {
 
         try{

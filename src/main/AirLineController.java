@@ -15,7 +15,13 @@ import main.utils.*;
 import java.io.IOException;
 import java.net.URL;
 
+/*
+ *
+ */
 public class AirLineController extends Controller{
+
+    private String flightTxtFile;
+    private ObservableList<Flight> flightList;
 
     @FXML private Label titleLabel;
     @FXML TableView<Flight> tableView;
@@ -25,8 +31,6 @@ public class AirLineController extends Controller{
     @FXML private TableColumn<Flight,Integer> seatsAvailableColumn;
     @FXML private TableColumn<Flight,Double> priceColumn;
 
-    private String flightTxtFile;
-    private ObservableList<Flight> flightList;
     /*
      * This method accepts a file to initialize the path for the data
      * @param the file with all of the flights
@@ -47,28 +51,30 @@ public class AirLineController extends Controller{
         titleLabel.setText(flightName);
     }
 
+    /*
+     * TODO write description
+     */
     private ObservableList<Flight> getFlights() {
         try {
             flightList = FileReader.getAllFlights(flightTxtFile);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return  flightList;
     }
 
+    /*
+     * TODO write description
+     */
     public void buyFlight(ActionEvent event) {
 
         Flight selectedFlight = tableView.getSelectionModel().getSelectedItem();
 
         if(selectedFlight != null){
-
             if(selectedFlight.getFlightStatus().compareToIgnoreCase("FULL") == 0 || selectedFlight.getSeatsAvailable() <= 0){
                 createAlertWindow("Flight is full, Select another flight", Alert.AlertType.WARNING);
                 return;
             }
-
-            System.out.println(selectedFlight);
 
             URL checkoutLocation = getClass().getResource("CheckoutScene.fxml");
             FXMLLoader loader = new FXMLLoader();
@@ -81,17 +87,12 @@ public class AirLineController extends Controller{
                 SwitchScene.switchScene(event,checkoutParent);
 
             } catch (IOException e) {
-                createAlertWindow("An error occurred", Alert.AlertType.ERROR);
+                createAlertWindow("An error occurred while reading files", Alert.AlertType.ERROR);
+                System.exit(1);
             }
-
-
-
-
-
         } else {
-
             // Alert User to select a flight
-            System.out.println("No Flight was selected");
+            createAlertWindow("No Flight was selected", Alert.AlertType.WARNING);
         }
     }
 }
