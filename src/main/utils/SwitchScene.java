@@ -1,4 +1,4 @@
-package main;
+package main.utils;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -6,25 +6,53 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.AirLineController;
 
+import java.net.URL;
+
+/*
+ * this class provides support for switching between windows
+ */
 public class SwitchScene {
 
-    static public void switchScene(ActionEvent event, Parent parent){
-
+    /*
+     * TODO write method description
+     */
+     public static void switchScene(ActionEvent event, Parent parent){
             Scene newScreenScene = new Scene(parent);
-            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            switchScene(event,newScreenScene);
+     }
 
-            window.setScene(newScreenScene);
-            window.show();
+    /*
+     * TODO write method description
+     */
+    public static void switchScene(ActionEvent event, Scene scene){
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setScene(scene);
+        window.show();
     }
 
-    static public void switchScene(ActionEvent event, Parent parent, String fileName){
+    /*
+     * TODO write method description
+     */
+    public static void changeScreenToFlights(String fileName,ActionEvent event, String airlineName, URL sceneLocation)  {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(sceneLocation);
+        try {
+            Parent airlineScreenParent = loader.load();
+            Scene airlineScene = new Scene(airlineScreenParent);
 
-        Scene newScreenScene = new Scene(parent);
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            AirLineController controller = loader.getController();
+            controller.initFile(fileName, airlineName);
 
-        window.setScene(newScreenScene);
-        window.show();
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            window.setScene(airlineScene);
+            window.show();
+        } catch (Exception e) {
+           // e.printStackTrace();
+            System.out.println("Error here");
+        }
     }
 
 }
