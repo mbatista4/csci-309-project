@@ -3,35 +3,29 @@ package main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import main.utils.SwitchScene;
+import main.utils.*;
 
 import java.net.URL;
 
 /*
  * TODO write description
  */
-public class MainScreenController {
+public class MainScreenController extends Controller{
 
     /*
      * TODO write description
      */
-    public void loadJetGreen(ActionEvent event) {
-            loadFLights("jetGreen.txt",event, "JetGreen");
-    }
+    public void loadJetGreen(ActionEvent event) { loadFLights(FileReader.JET_GREEN,event, "JetGreen"); }
 
     /*
      * TODO write description
      */
-    public void loadUSAirlines(ActionEvent event) {
-            loadFLights("usAirlines.txt",event,"US Airlines");
-    }
+    public void loadDividedAirlines(ActionEvent event) { loadFLights(FileReader.DIVIDED_AIR,event,"Divided Airlines"); }
 
     /*
      * TODO write description
      */
-    public void loadBravoAirlines(ActionEvent event) {
-            loadFLights("bravoAirlines.txt",event,"Bravo Airlines");
-    }
+    public void loadBravoAirlines(ActionEvent event) { loadFLights(FileReader.BRAVO_AIR,event,"Bravo Airlines"); }
 
     /*
      * TODO write description
@@ -42,7 +36,7 @@ public class MainScreenController {
 
             SwitchScene.changeScreenToFlights(fileName,event, flightName,sceneLocation);
         }catch (Exception e) {
-            System.out.println("Here");
+
           e.printStackTrace();
         }
     }

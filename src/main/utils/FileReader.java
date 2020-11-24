@@ -15,6 +15,11 @@ import java.util.Scanner;
  */
 public class FileReader {
 
+    private static final String userInfo = "users.dat";
+    public static final String JET_GREEN = "jetGreen.dat";
+    public static final String DIVIDED_AIR = "dAirlines.dat";
+    public static final String BRAVO_AIR = "bAirlines.dat";
+
     /*
      * TODO write method description
      */
@@ -50,7 +55,7 @@ public class FileReader {
 
         try {
             //Ensuring that the file exist to prevent error
-            File userFile = ensureFile("users.txt");
+            File userFile = ensureFile(userInfo);
 
             Scanner scanner = new Scanner(userFile);
             while(scanner.hasNext()){
@@ -74,7 +79,7 @@ public class FileReader {
     public static boolean checkUsername(String username) {
         boolean isFound = false;
         try {
-            File userFile = ensureFile("users.txt");
+            File userFile = ensureFile(userInfo);
 
             Scanner fileScan = new Scanner(userFile);
             while(fileScan.hasNext()){
@@ -106,7 +111,7 @@ public class FileReader {
         String encryptPassword = Password.encryptPassword(password);
 
         try {
-            File userFile = ensureFile("users.txt");
+            File userFile = ensureFile(userInfo);
             FileWriter writer = new FileWriter(userFile.getPath(),true);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
 
@@ -128,6 +133,7 @@ public class FileReader {
     private static File ensureFile(String fileName) {
         File myFile = new File(fileName);
         try {
+
             boolean didCreate = myFile.createNewFile();
             if(didCreate) {
                 System.out.println("New File Was Created");

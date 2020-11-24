@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import main.utils.FileReader;
+import main.utils.Password;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -14,7 +15,7 @@ import java.util.ResourceBundle;
 
 public class EditController extends Controller implements Initializable {
 
-    // C
+    // new Flight information
     @FXML private Slider priceSlider;
     @FXML private VBox newFlightVBox;
     @FXML private Slider seatSlider;
@@ -22,6 +23,13 @@ public class EditController extends Controller implements Initializable {
     @FXML private TextField seatTextField;
     @FXML private TextField flightNameTextField;
     @FXML private  TextField destinationTextField;
+
+    // add manager information
+    @FXML private VBox addManagerVBox;
+    @FXML private TextField usernameTextField;
+    @FXML private TextField passwordTextField;
+    @FXML private TextField passwordTextField1;
+
 
     //JetGreen tableview
     @FXML private TableView<Flight> jetGreenTableView;
@@ -59,7 +67,7 @@ public class EditController extends Controller implements Initializable {
         jetGreenSeatsAvailableColumn.setCellValueFactory(new PropertyValueFactory<>("seatsAvailable"));
         jetGreenPriceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePerSeat"));
 
-        jetGreenTableView.setItems(getFlightList("jetGreen.txt"));
+        jetGreenTableView.setItems(getFlightList("jetGreen.dat"));
     }
 
     /*
@@ -73,7 +81,7 @@ public class EditController extends Controller implements Initializable {
         dividedPriceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePerSeat"));
 
 
-        dividedTableView.setItems(getFlightList("usAirlines.txt"));
+        dividedTableView.setItems(getFlightList("dAirlines.dat"));
     }
 
     /*
@@ -85,7 +93,7 @@ public class EditController extends Controller implements Initializable {
         bravoStatusColumn.setCellValueFactory(new PropertyValueFactory<>("flightStatus"));
         bravoSeatsAvailableColumn.setCellValueFactory(new PropertyValueFactory<>("seatsAvailable"));
         bravoPriceColumn.setCellValueFactory(new PropertyValueFactory<>("pricePerSeat"));
-        bravoTableView.setItems(getFlightList("bravoAirlines.txt"));
+        bravoTableView.setItems(getFlightList("bAirlines.dat"));
     }
 
     /*
@@ -97,7 +105,7 @@ public class EditController extends Controller implements Initializable {
      * TODO write description
      */
     public void addDivided(){
-        Flight newFlight = addFlight("usAirlines.txt");
+        Flight newFlight = addFlight(FileReader.DIVIDED_AIR);
 
         if(newFlight!= null ){
             dividedTableView.getItems().add(newFlight);
@@ -108,7 +116,7 @@ public class EditController extends Controller implements Initializable {
      * TODO write description
      */
     public void addJet(){
-        Flight newFlight = addFlight("jetGreen.txt");
+        Flight newFlight = addFlight(FileReader.JET_GREEN);
         if(newFlight!= null ){
             jetGreenTableView.getItems().add(newFlight);
         }
@@ -118,7 +126,7 @@ public class EditController extends Controller implements Initializable {
      * TODO write description
      */
     public void addBravo() {
-        Flight newFlight = addFlight("bravoAirlines.txt");
+        Flight newFlight = addFlight(FileReader.BRAVO_AIR);
         if(newFlight!= null ){
             bravoTableView.getItems().add(newFlight);
         }
@@ -202,8 +210,50 @@ public class EditController extends Controller implements Initializable {
     /*
      * TODO write description
      */
-    public void showAdd() {
-        isVisible = !isVisible;
-        newFlightVBox.setVisible(isVisible);
+    public void showAddFlight() {
+        if(addManagerVBox.isVisible()){
+            newFlightVBox.setVisible(isVisible);
+            addManagerVBox.setVisible(!isVisible);
+        } else {
+            isVisible = !isVisible;
+            newFlightVBox.setVisible(isVisible);
+        }
+    }
+
+    public void showAddManager() {
+        if(newFlightVBox.isVisible()){
+            addManagerVBox.setVisible(isVisible);
+            newFlightVBox.setVisible(!isVisible);
+        } else {
+            isVisible = !isVisible;
+            addManagerVBox.setVisible(isVisible);
+        }
+    }
+
+    public void addManager() {
+
+        String username = usernameTextField.getText().trim();
+        String pass1 = passwordTextField.getText().trim();
+        String pass2 = passwordTextField1.getText().trim();
+
+        if(username.isEmpty() || pass1.isEmpty() || pass2.isEmpty()){
+           createAlertWindow("Missing fields!", Alert.AlertType.WARNING);
+        } else if (pass1.compareTo(pass2) != 0) {
+            createAlertWindow("Passwords do not Match!!", Alert.AlertType.WARNING);
+        } else {
+
+            if (!FileReader.checkUsername(username)){
+                boolean didAdd = FileReader.addUser(username,pass1);
+                if(didAdd) {
+                    createAlertWindow("Manager added to Database", Alert.AlertType.WARNING);
+                    usernameTextField.clear();
+                    passwordTextField.clear();
+                    passwordTextField1.clear();
+                }
+            } else {
+                createAlertWindow("Username Already exist", Alert.AlertType.WARNING);
+                usernameTextField.clear();
+            }
+        }
     }
 }

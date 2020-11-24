@@ -31,43 +31,44 @@ public class LoginController extends Controller{
         String usernameText = userNameTextField.getText().trim();
         String passwordText = passwordField.getText().trim();
 
+
+
         if(!usernameText.isEmpty()){
-            String password = FileReader.getUserPassword(usernameText);
+            boolean isAdmin = checkAdmin(usernameText,passwordText);
 
-            if( !password.isEmpty()){
-
-                boolean isCorrect =  Password.comparePasswords(passwordText,password);
-
-                System.out.println(isCorrect);
-
-                if(isCorrect) {
-                    goToEdit(event);
-                } else {
-                    createAlertWindow("Password is incorrect.", Alert.AlertType.WARNING);
-                    passwordField.clear();
-                }
+            if(isAdmin){
+                System.out.println("here");
+                goToEdit(event);
             } else {
-                createAlertWindow("username was not found", Alert.AlertType.WARNING);
+                String password = FileReader.getUserPassword(usernameText);
+
+                if( !password.isEmpty()){
+
+                    boolean isCorrect =  Password.comparePasswords(passwordText,password);
+
+                    System.out.println(isCorrect);
+
+                    if(isCorrect) {
+                        goToEdit(event);
+                    } else {
+                        createAlertWindow("Password is incorrect.", Alert.AlertType.WARNING);
+                        passwordField.clear();
+                    }
+                } else {
+                    createAlertWindow("username was not found", Alert.AlertType.WARNING);
+                }
             }
+
         } else {
             createAlertWindow("Please Enter A username.", Alert.AlertType.WARNING);
         }
     }
 
-    /*
-     * TODO write description
-     */
-    public void goToRegister(ActionEvent event){
-
-        try{
-            URL registerURL = getClass().getResource("registerScene.fxml");
-            Parent registerParent = FXMLLoader.load(registerURL);
-            SwitchScene.switchScene(event,registerParent);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error loading Resource!");
-        }
+    private boolean checkAdmin(String username, String password) {
+        return (username.compareToIgnoreCase("admin") == 0 && password.compareToIgnoreCase("admin") == 0);
     }
+
+
 
     /*
      * TODO write description

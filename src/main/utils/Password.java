@@ -28,7 +28,7 @@ public class Password {
         char[] passwordChar = encryptedPassword.toCharArray();
 
         for (int i = 0; i < passwordChar.length; i++) {
-            passwordChar[i] = (char) (passwordChar[i] - (ENCRYPT_VAL * 2));
+            passwordChar[i] = (char) (passwordChar[i] - (ENCRYPT_VAL));
         }
 
         return buildString(passwordChar);
@@ -40,7 +40,7 @@ public class Password {
      */
     public static boolean comparePasswords(String unencryptedPassword, String encryptedPassword) {
 
-        System.out.println(unencryptedPassword);
+        System.out.println(unencryptedPassword + " here");
         System.out.println(decryptPassword(encryptedPassword));
 
         return (decryptPassword(encryptedPassword).compareTo(unencryptedPassword) == 0);
