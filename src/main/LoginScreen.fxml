@@ -39,6 +39,6 @@
          </children>
       </VBox>
       <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1164.0" layoutY="666.0" mnemonicParsing="false" onAction="#switchToMain" prefHeight="40.0" prefWidth="90.0" text="Back to main" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="1164.0" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="666.0" />
-      <Button alignment="CENTER" contentDisplay="CENTER" layoutX="1054.0" layoutY="666.0" mnemonicParsing="false" onAction="#goToRegister" prefHeight="40.0" prefWidth="90.0" text="Register here" textAlignment="CENTER" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="1054.0" AnchorPane.rightAnchor="136.0" AnchorPane.topAnchor="666.0" />
+
    </children>
 </AnchorPane>

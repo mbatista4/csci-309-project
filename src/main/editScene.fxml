@@ -12,7 +12,7 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(to top, #00b7ba, #00fbff);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.EditController">
    <children>
-      <VBox fx:id="newFlightVBox" alignment="CENTER" layoutX="785.0" layoutY="368.0" prefHeight="212.0" prefWidth="326.0" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="785.0" AnchorPane.rightAnchor="169.0" AnchorPane.topAnchor="368.0">
+      <VBox fx:id="newFlightVBox" alignment="CENTER" layoutX="785.0" layoutY="368.0" prefHeight="212.0" prefWidth="326.0" visible="false" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="785.0" AnchorPane.rightAnchor="169.0" AnchorPane.topAnchor="368.0">
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0">
                <children>
@@ -59,11 +59,12 @@
       </VBox>
       <VBox alignment="CENTER" layoutX="590.0" layoutY="487.0" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="590.0" AnchorPane.rightAnchor="590.0" AnchorPane.topAnchor="487.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#showAdd" prefHeight="40.0" prefWidth="100.0" text="Add Flight">
+            <Button mnemonicParsing="false" onAction="#showAddManager" prefHeight="40.0" prefWidth="100.0" text="Add Manager">
                <VBox.margin>
                   <Insets bottom="20.0" />
                </VBox.margin>
             </Button>
+            <Button layoutX="10.0" layoutY="80.0" mnemonicParsing="false" onAction="#showAddFlight" prefHeight="40.0" prefWidth="100.0" text="Add Flight" />
          </children>
       </VBox>
       <Button layoutX="1138.0" layoutY="647.0" mnemonicParsing="false" onAction="#switchToMain" prefHeight="40.0" prefWidth="95.0" text="Logout" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="1138.0" AnchorPane.rightAnchor="47.0" AnchorPane.topAnchor="647.0" />
@@ -106,5 +107,42 @@
       <Label layoutX="219.0" layoutY="49.0" text="JetGreen" />
       <Label layoutX="219.0" layoutY="386.0" text="Divided Airline" />
       <Label layoutX="1009.0" layoutY="49.0" text="Bravo Airlines" />
+      <VBox fx:id="addManagerVBox" alignment="CENTER" layoutX="795.0" layoutY="378.0" prefHeight="212.0" prefWidth="326.0" visible="false">
+         <children>
+            <AnchorPane prefHeight="200.0" prefWidth="326.0">
+               <children>
+                  <Label layoutX="27.0" layoutY="5.0" text="Username" />
+                  <TextField fx:id="usernameTextField" layoutX="121.0" layoutY="2.0" prefHeight="25.0" prefWidth="205.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="27.0" layoutY="8.0" text="Password" />
+                  <TextField fx:id="passwordTextField" layoutX="121.0" layoutY="5.0" prefHeight="25.0" prefWidth="205.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane prefHeight="45.0" prefWidth="326.0">
+               <children>
+                  <Label layoutX="25.0" layoutY="11.0" prefHeight="17.0" prefWidth="78.0" text="Password" />
+                  <TextField fx:id="passwordTextField1" layoutX="119.0" layoutY="5.0" prefHeight="25.0" prefWidth="205.0">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </TextField>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </AnchorPane>
+            <AnchorPane prefHeight="27.0" prefWidth="351.0">
+               <children>
+                  <Button layoutX="180.0" layoutY="18.0" mnemonicParsing="false" onAction="#addManager" prefHeight="40.0" prefWidth="95.0" text="ADD" />
+               </children>
+               <padding>
+                  <Insets bottom="20.0" />
+               </padding>
+            </AnchorPane>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
