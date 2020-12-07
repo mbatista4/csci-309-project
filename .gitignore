@@ -1,3 +1,4 @@
-out/
-*.dat
+out/*
+out
 *.txt
+*.dat

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" style="-fx-background-color: linear-gradient(to top, #00b7ba, #00fbff);" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.LoginController">
+   <children>
+      <VBox layoutX="504.0" layoutY="173.0" prefHeight="351.0" prefWidth="272.0" style="-fx-background-color: #e3e3e3; -fx-background-radius: 10%;">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Username:" />
+                  <TextField fx:id="userNameTextField">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin></TextField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Password:" />
+                  <PasswordField fx:id="passwordField">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin></PasswordField>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#login" prefHeight="40.0" prefWidth="80.0" text="Login" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <Button alignment="CENTER" layoutX="1165.0" layoutY="650.0" mnemonicParsing="false" onAction="#switchToMain" prefHeight="56.0" prefWidth="100.0" text="Back" textAlignment="CENTER">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Button>
+
+   </children>
+</AnchorPane>
